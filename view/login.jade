@@ -13,7 +13,7 @@ html(lang='en')
 			.row.py-md-5
 				.col-md-6.offset-md-3
 					.jumbotron.bg-light
-						form.sign-in
+						form.sign-in(method='post')
 							h2 Faça o login
 							.form-group
 								label(for='email') Email
@@ -22,5 +22,8 @@ html(lang='en')
 							.form-group
 								label(for='password') Senha
 								input.form-control(type='password', name='password', id='password')
+							
+							if err
+								.alert.alert-danger Email ou senha incorreto!
 
 							button.btn.btn-primary(type='submit') Submit
