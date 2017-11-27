@@ -63,11 +63,6 @@ const users = {
 		}
 
 		let users = await User.findAll({
-			where : {
-				email : {
-					$ne : ctx.user.email
-				}
-			},
 			include : [ Park ],
 			raw : true
 		}) || []
@@ -76,7 +71,9 @@ const users = {
 			raw : true
 		}) || []
 
-		ctx.body = jade.renderFile('./view/users.jade', { users , parks })
+		ctx.body = jade.renderFile('./view/users.jade', {
+			users , parks , email : ctx.user.email , err : ctx.err
+		})
 	},
 
 	post : async function(ctx, next) {
@@ -98,6 +95,19 @@ const users = {
 			let parkId   = body.parkId
 
 			password = pass.encrypt(password)
+
+			let user = await User.findOne({
+				where : {
+					email : email
+				},
+				raw : true
+			})
+
+			if (user != null) {
+				ctx.err = 'Email já cadastrado!'
+				await users.get(ctx, next)
+				return
+			}
 
 			await User.create({
 				name, email, password, parkId

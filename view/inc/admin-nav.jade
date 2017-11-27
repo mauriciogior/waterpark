@@ -1,17 +1,13 @@
-nav.navbar.navbar-expand-lg.navbar-light.bg-light
-	a.navbar-brand(href='/') Waterpark
+.ui.top.fixed.menu
+	a.item(href='/') Waterpark
+	a.item(href='/administracao/parques', class=active == 'parques' ? 'active' : '') Parques
+	a.item(href='/administracao/usuarios', class=active == 'usuarios' ? 'active' : '') Usuários
 
-	.collapse.navbar-collapse
-		ul.navbar-nav.navbar-left
-			li.nav-item(class=active == 'parques' ? 'active' : '')
-				a.nav-link(href='/administracao/parques') Parques
+	.menu.right
+		.ui.dropdown.simple.icon.item
+			| Mauricio
+			i.icon.dropdown
 
-			li.nav-item(class=active == 'usuarios' ? 'active' : '')
-				a.nav-link(href='/administracao/usuarios') Usuários
-
-		ul.navbar-nav.ml-auto
-			li.nav-item.dropdown
-				a.nav-link.dropdown-toggle(href='#', id='rightDropdown', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false') Mauricio
-
-				.dropdown-menu.dropdown-menu-right(aria-labelledby='rightDropdown')
-					a.dropdown-item(href='/sair') Sair
+			.menu
+				a.item(href='/configuracoes') Configurações
+				a.item(href='/sair') Sair

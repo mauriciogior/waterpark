@@ -1,6 +1,6 @@
 const koa        = new (require('koa'))
 	, session    = require('koa-session')
-	, static     = require('koa-static')('public')
+	, static     = require('koa-static')
 	, router     = new (require('koa-router'))
 	, bodyParser = require('koa-bodyparser')
 
@@ -11,7 +11,8 @@ const routes  = require('./route/index.js')
 routes(router)
 
 // Serve static files
-koa.use(static)
+koa.use(static('public'))
+koa.use(static('semantic'))
 koa.use(session(koa))
 koa.use(bodyParser())
 

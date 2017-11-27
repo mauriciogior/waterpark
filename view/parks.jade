@@ -4,42 +4,47 @@ body
 	- var active = 'parques'
 	include ./inc/admin-nav.jade
 
-	.container.py-md-5
-		.row
-			.col-md-8.offset-md-2
-				.container
-					.row
-						.col-md-8
-							h1 Parques
-						.col-md-4
-							button.btn.btn-primary(type='button', data-toggle='modal', data-target='#create')
-								| Adicionar Parque
-
-				br
-
-				table.table
-					thead
-						tr
-							th(scope='col') Nome
-					tbody
-						for park in parks
+	.ui.container.very.padded.distant.top
+		.ui.grid
+			.row
+				.ten.wide.column
+					h1.ui.header
+						| Parques
+				.six.wide.column.right.aligned
+					button.ui.primary.button(data-toggle-modal='#modal-create-park')
+						| Adicionar Parque
+			
+			.row
+				.column
+					table.ui.celled.table
+						thead
 							tr
-								td= park.name
+								th(scope='col') Nome
+								th(scope='col') Ações
+						tbody
+							for park in parks
+								tr
+									td
+										a(href='parques/'+park.id)= park.name
+									td(width='150px')
+										form(method='post')
+											button.ui.negative.right.labeled.icon.button(type='submit', name='delete', value=park.id)
+												| Remover
+												i.remove.user.icon
 
-	#create.modal.fade(tabindex='-1', role='dialog', aria-labelledby='modalLabel', aria-hidden='true')
-		form(method='post')
-			.modal-dialog(role='document')
-				.modal-content
-					.modal-header
-						h5#modalLabel.modal-title Adicionar Parque
-						button.close(type='button', data-dismiss='modal', aria-label='Fechad')
-							span(aria-hidden='true') ×
-					.modal-body
-						.form-group
-							label(for='inputName') Nome
-							input.form-control(type='text', id='inputName', name='name', placeholder='Digite o nome aqui')
-					.modal-footer
-						button.btn.btn-secondary(type='button', data-dismiss='modal') Fechar
-						button.btn.btn-primary(type='submit', name='create', value='true') Adicionar
+	#modal-create-park.ui.modal.tiny
+		.header
+			h5.modal-title Adicionar Parque
+			
+		.content
+			form#form-create-park.ui.form(method='post')
+				.field
+					label(for='inputName') Nome
+					input(type='text', id='inputName', name='name', placeholder='Digite o nome aqui')
+		.actions
+			button.ui.deny.button(type='button', data-dismiss='modal') Fechar
+			button.ui.positive.right.labeled.icon.button(type='submit', form='form-create-park', name='create', value='true')
+				| Adicionar
+				i.checkmark.icon
 
 include ./inc/footer.jade

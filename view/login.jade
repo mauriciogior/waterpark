@@ -3,27 +3,28 @@ html(lang='en')
 	head
 		title= pageTitle
 		meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
-		link(rel='stylesheet', href='/css/bootstrap.min.css')
+		link(rel='stylesheet', href='dist/semantic.min.css')
 	body
-		.container.py-md-5
+		.ui.two.column.centered.grid
 			.row
-				.col-md-6.offset-md-3
-					h1 Waterpark
+			.column
+				h1.ui.center.aligned.icon.header
+					i.circular.users.icon
+					| Waterpark
 
-			.row.py-md-5
-				.col-md-6.offset-md-3
-					.jumbotron.bg-light
-						form.sign-in(method='post')
+				.ui.one.column.grid.segment.red.padded
+					.column
+						form.ui.form(method='post')
 							h2 Faça o login
-							.form-group
+							.field
 								label(for='email') Email
 								input.form-control(type='email', name='email', id='email')
 
-							.form-group
+							.field
 								label(for='password') Senha
 								input.form-control(type='password', name='password', id='password')
 							
 							if err
 								.alert.alert-danger Email ou senha incorreto!
 
-							button.btn.btn-primary(type='submit') Submit
+							button.ui.button(type='submit') Submit

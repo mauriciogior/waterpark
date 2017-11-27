@@ -4,66 +4,74 @@ body
 	- var active = 'usuarios'
 	include ./inc/admin-nav.jade
 
-	.container.py-md-5
-		.row
-			.col-md-8.offset-md-2
-				.container
-					.row
-						.col-md-8
-							h1 Usuarios
-						.col-md-4
-							button.btn.btn-primary(type='button', data-toggle='modal', data-target='#create')
-								| Adicionar Usuario
+	.ui.container.very.padded.distant.top
+		.ui.grid
+			.row
+				.ten.wide.column
+					h1.ui.header
+						| Usuários
+				.six.wide.column.right.aligned
+					button.ui.primary.button(data-toggle-modal='#modal-create-user')
+						| Adicionar Usuário
+			
+			.row
+				.column
+					if (err)
+						.ui.error.message= err
 
-				br
-
-				table.table
-					thead
-						tr
-							th(scope='col') Nome
-							th(scope='col') Email
-							th(scope='col') Parque
-							th(scope='col') Ações
-					tbody
-						for user in users
+					table.ui.celled.table
+						thead
 							tr
-								td= user.name
-								td= user.email
-								td= user['park.name']
-								td
-									form(method='post')
-										button.btn.btn-outline-danger(type='submit', name='delete', value=user.id)
-											| Remover
+								th(scope='col') Nome
+								th(scope='col') Email
+								th(scope='col') Parque
+								th(scope='col') Ações
+						tbody
+							for user in users
+								tr
+									td= user.name
+									td= user.email
+									td= (user['park.name'] == NULL) ? 'Nenhum' : user['park.name']
+									td(width='150px')
+										if (user['email'] != email)
+											form(method='post')
+												button.ui.negative.right.labeled.icon.button(type='submit', name='delete', value=user.id)
+													| Remover
+													i.remove.user.icon
+										else
+											button.ui.negative.right.labeled.icon.button.disabled()
+												| Remover
+												i.remove.user.icon
 
-	#create.modal.fade(tabindex='-1', role='dialog', aria-labelledby='modalLabel', aria-hidden='true')
-		form(method='post')
-			.modal-dialog(role='document')
-				.modal-content
-					.modal-header
-						h5#modalLabel.modal-title Adicionar Usuario
-						button.close(type='button', data-dismiss='modal', aria-label='Fechad')
-							span(aria-hidden='true') ×
-					.modal-body
-						.form-group
-							label(for='inputName') Nome
-							input.form-control(type='text', id='inputName', name='name', placeholder='Digite o nome aqui')
 
-						.form-group
-							label(for='inputEmail') Email
-							input.form-control(type='email', id='inputEmail', name='email', placeholder='Digite o email aqui')
 
-						.form-group
-							label(for='inputPassword') Senha
-							input.form-control(type='password', id='inputPassword', name='password', placeholder='Digite a senha aqui')
+	#modal-create-user.ui.modal.tiny
+		.header
+			h5.modal-title Adicionar Usuário
+			
+		.content
+			form#form-create-user.ui.form(method='post')
+				.field
+					label(for='inputName') Nome
+					input(type='text', id='inputName', name='name', placeholder='Digite o nome aqui')
 
-						.form-group
-							label(for='selectPark') Parque
-							select.form-control(id='selectPark', name='parkId')
-								for park in parks
-									option(value=park.id)= park.name
-						
-					.modal-footer
-						button.btn.btn-secondary(type='button', data-dismiss='modal') Fechar
-						button.btn.btn-primary(type='submit', name='create', value='true') Adicionar
+				.field
+					label(for='inputEmail') Email
+					input(type='email', id='inputEmail', name='email', placeholder='Digite o email aqui')
+
+				.field
+					label(for='inputPassword') Senha
+					input(type='password', id='inputPassword', name='password', placeholder='Digite a senha aqui')
+
+				.field
+					label(for='selectPark') Parque
+					select.ui.fluid.dropdown(id='selectPark', name='parkId')
+						for park in parks
+							option(value=park.id)= park.name
+		.actions
+			button.ui.deny.button(type='button', data-dismiss='modal') Fechar
+			button.ui.positive.right.labeled.icon.button(type='submit', form='form-create-user', name='create', value='true')
+				| Adicionar
+				i.checkmark.icon
 
 include ./inc/footer.jade
