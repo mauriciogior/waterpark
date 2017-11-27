@@ -3,14 +3,21 @@ const jade = require('jade')
 	, User = require('../model/user.js')
 	, Park = require('../model/park.js')
 
-const admin = {
+const park = {
 	get : async function(ctx, next) {
 		if (!ctx.user.admin) {
 			ctx.redirect(`/administracao/parques/${ctx.user.park_id}`)
 			return
 		}
 
-		ctx.body = jade.renderFile('./view/admin.jade')
+		let park = await Park.findById(ctx.params.id)
+
+		if (park == null) {
+			ctx.redirect(`/administracao/parques`)
+			return
+		}
+
+		ctx.body = jade.renderFile('./view/park.jade', { park , user : ctx.user , err : ctx.err })
 	},
 
 	post : async function(ctx, next) {
@@ -18,14 +25,14 @@ const admin = {
 	}
 }
 
-const parks = {
+const brokers = {
 	get : async function(ctx, next) {
 		if (!ctx.user.admin) {
 			ctx.redirect(`/administracao/parques/${ctx.user.park_id}`)
 			return
 		}
 
-		let parks = await Park.findAll({
+		let brokers = await Park.findAll({
 			raw : true
 		}) || []
 
@@ -62,7 +69,7 @@ const parks = {
 	}
 }
 
-const users = {
+const deeds = {
 	get : async function(ctx, next) {
 		if (!ctx.user.admin) {
 			ctx.redirect(`/administracao/parques/${ctx.user.park_id}`)
@@ -128,4 +135,4 @@ const users = {
 /**
  * The login route
  */
-module.exports = { admin , parks , users }
+module.exports = { park , brokers , deeds }

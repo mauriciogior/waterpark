@@ -16,6 +16,9 @@ body
 			
 			.row
 				.column
+					if (err)
+						.ui.error.message= err
+
 					table.ui.celled.table
 						thead
 							tr

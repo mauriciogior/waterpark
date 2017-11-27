@@ -1,0 +1,16 @@
+.ui.top.fixed.menu
+	if (user.admin)
+		a.item(href='/administracao/parques')
+			i.arrow.left.icon
+	a.item(href='/administracao/parques/' + park.id, class=active == 'parque' ? 'active' : '')= park.name
+	a.item(href='#/administracao/parques/' + park.id + '/consultores', class=active == 'consultores' ? 'active' : '') Consultores
+	a.item(href='#/administracao/parques/' + park.id + '/titulos', class=active == 'titulos' ? 'active' : '') Títulos
+
+	.menu.right
+		.ui.dropdown.simple.icon.item
+			| Mauricio
+			i.icon.dropdown
+
+			.menu
+				a.item(href='/configuracoes') Configurações
+				a.item(href='/sair') Sair

@@ -39,7 +39,12 @@ const post = async function(ctx, next) {
 	ctx.redirect('/administracao')
 }
 
+const logout = async function(ctx, next) {
+	ctx.cookies.set('user', null)
+	ctx.redirect('/')
+}
+
 /**
  * The login route
  */
-module.exports = { get , post }
+module.exports = { get , post , logout }
