@@ -2,9 +2,9 @@
   "name": "waterpark",
   "version": "1.0.0",
   "description": "CRM for Waterparks",
-  "main": "start.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+     "start": "node app.js"
   },
   "author": "Mauricio Giordano",
   "license": "GPL-2.0",
